@@ -1,12 +1,13 @@
 let express = require('express')
 let mongoose = require('mongoose');
 var cookieSession = require('cookie-session')
+const cors = require('cors')
 
 const AccountRouter = require('./routes/account')
 const ApiRouter = require('./routes/api')
 
 let app = express();
-var port = 3000;
+var port = 3001;
 
 const dbPath = 'mongodb://localhost/firstrest';
 const options = {useNewUrlParser: true, useUnifiedTopology: true}
@@ -24,6 +25,7 @@ app.use(cookieSession({
 }))
 
 app.use(express.json())
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
 app.get('/', (req, res) => res.send(`Welcome ${req.session.username}`));
 app.use('/account', AccountRouter)
